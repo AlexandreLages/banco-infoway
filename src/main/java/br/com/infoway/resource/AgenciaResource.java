@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +22,9 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 	@Autowired
 	private AgenciaService agenciaService;
 
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(method=RequestMethod.POST, 
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@Override
 	public ResponseEntity<Void> inserir(Agencia t) {
 		t = agenciaService.inserir(t);
@@ -30,7 +33,9 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@Override
 	public ResponseEntity<Void> atualizar(Agencia t, Long id) {
 		t.setId(id);
@@ -38,7 +43,9 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 		return ResponseEntity.noContent().build();
 	}
 
-	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@Override
 	public ResponseEntity<Void> deletar(Long id) {
 		agenciaService.deletar(id);
@@ -46,14 +53,18 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 
 	}
 
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/{id}", method=RequestMethod.GET,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@Override
 	public ResponseEntity<Agencia> pesquisarPorId(Long id) {
 		Agencia agencia = agenciaService.pesquisarPorId(id);
 		return ResponseEntity.ok().body(agencia);
 	}
 
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@Override
 	public ResponseEntity<List<Agencia>> listarTodos() {
 		List<Agencia> listaAgencia = agenciaService.listarTodos();
