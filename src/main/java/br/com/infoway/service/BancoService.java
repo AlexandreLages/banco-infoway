@@ -26,7 +26,6 @@ public class BancoService implements ServiceInterface<Banco> {
 	@Override
 	public Banco atualizar(Banco banco) {
 		pesquisarPorId(banco.getId());
-		banco.setId(banco.getId());
 		return bancoRepository.save(banco);
 	}
 

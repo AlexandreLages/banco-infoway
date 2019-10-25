@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface ServiceInterface<T> {
 
-	public T inserir(T object);
+	public T inserir(T t);
 	
-	public T atualizar(T object);
+	public T atualizar(T t);
 	
 	public void deletar(Long id);
 	
