@@ -1,4 +1,4 @@
-package br.com.model;
+package br.com.infoway.model;
 
 import java.io.Serializable;
 
