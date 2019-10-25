@@ -1,27 +1,19 @@
 package br.com.infoway.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-/**
- * 
- * @author Alexandre Lages
- *
- * Implementação da classe de modelo Banco
- */
-
 @Entity
-public class Banco implements Serializable {
+public class Agencia implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -35,18 +27,20 @@ public class Banco implements Serializable {
 	@NotNull
 	private String cnpj;
 	
-	@OneToMany(mappedBy = "banco")
-	private List<Agencia> agencias = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "banco_id")
+	private Banco banco;
 	
-	public Banco() {
+	public Agencia() {
 	}
 
-	public Banco(Long id, @NotNull Integer codigo, @NotNull String nome, @NotNull String cnpj) {
+	public Agencia(Long id, @NotNull Integer codigo, @NotNull String nome, @NotNull String cnpj, Banco banco) {
 		super();
 		this.id = id;
 		this.codigo = codigo;
 		this.nome = nome;
 		this.cnpj = cnpj;
+		this.banco = banco;
 	}
 
 	public Long getId() {
@@ -81,14 +75,6 @@ public class Banco implements Serializable {
 		this.cnpj = cnpj;
 	}
 
-	public List<Agencia> getAgencias() {
-		return agencias;
-	}
-
-	public void setAgencias(List<Agencia> agencias) {
-		this.agencias = agencias;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -105,7 +91,7 @@ public class Banco implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Banco other = (Banco) obj;
+		Agencia other = (Agencia) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
