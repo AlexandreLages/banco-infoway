@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -18,6 +20,12 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(tratamentoException);
 	}
 	
+	@ExceptionHandler(ObjetoJaExisteException.class)
+	public ResponseEntity<TratamentoException> objetoJaExiste(ObjetoJaExisteException ex, HttpServletRequest request) {
+		TratamentoException tratamentoException = new TratamentoException(HttpStatus.CONFLICT.value(), ex.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(tratamentoException);
+	}
+	
 	@ExceptionHandler(NumberFormatException.class)
 	public ResponseEntity<TratamentoException> formatoNumero(NumberFormatException ex, HttpServletRequest request) {
 		TratamentoException tratamentoException = new TratamentoException(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), System.currentTimeMillis());
@@ -28,5 +36,14 @@ public class ResourceExceptionHandler {
 	public ResponseEntity<TratamentoException> formatoJson(JsonParseException ex, HttpServletRequest request) {
 		TratamentoException tratamentoException = new TratamentoException(HttpStatus.BAD_REQUEST.value(), ex.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(tratamentoException);
+	}
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<TratamentoException> validaCampos(MethodArgumentNotValidException ex, HttpServletRequest request) {
+		ValidacaoException validacaoException = new ValidacaoException(HttpStatus.BAD_REQUEST.value(), "Erros de validação", System.currentTimeMillis());
+		for(FieldError error : ex.getBindingResult().getFieldErrors()) {
+			validacaoException.adicionarErro(error.getField(), error.getDefaultMessage());
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validacaoException);
 	}
 }

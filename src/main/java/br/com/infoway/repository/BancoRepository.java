@@ -8,4 +8,9 @@ import br.com.infoway.model.Banco;
 @Repository
 public interface BancoRepository extends JpaRepository<Banco, Long> {
 
+	Banco findByCodigo(Integer codigo);
+	
+	Banco findByNome(String nome);
+	
+	Banco findByCnpj(String cnpj);
 }

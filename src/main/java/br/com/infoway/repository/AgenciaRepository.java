@@ -7,5 +7,10 @@ import br.com.infoway.model.Agencia;
 
 @Repository
 public interface AgenciaRepository extends JpaRepository<Agencia, Long> {
+
+	Agencia findByNome(String nome);
 	
+	Agencia findByCnpj(String cnpj);
+	
+	Agencia findByCodigo(Integer codigo);
 }

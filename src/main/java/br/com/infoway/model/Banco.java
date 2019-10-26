@@ -9,7 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 
@@ -26,15 +30,18 @@ public class Banco implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull
+	@NotNull(message = "Preenchimento obrigatório!")
 	private Integer codigo;
 	
-	@NotNull
+	@Size(min = 6, max = 50, message = "Deve conter entre 6 e 50 caracteres!")
+	@NotEmpty(message = "Preenchimento obrigatório!")
 	private String nome;
 	
-	@NotNull
+	@Size(min = 14, max = 14, message = "Deve conter exatamente 14 caracteres!")
+	@NotEmpty(message = "Preenchimento obrigatório!")
 	private String cnpj;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "banco")
 	private List<Agencia> agencias = new ArrayList<>();
 	

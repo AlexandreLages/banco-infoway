@@ -50,7 +50,6 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 	public ResponseEntity<Void> deletar(Long id) {
 		agenciaService.deletar(id);
 		return ResponseEntity.noContent().build();
-
 	}
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET,

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.infoway.exception.ObjetoJaExisteException;
 import br.com.infoway.exception.ObjetoNaoEncontradoException;
 import br.com.infoway.interfaces.ServiceInterface;
 import br.com.infoway.model.Banco;
@@ -18,9 +19,12 @@ public class BancoService implements ServiceInterface<Banco> {
 	private BancoRepository bancoRepository;
 
 	@Override
-	public Banco inserir(Banco object) {
-		object.setId(null);
-		return bancoRepository.save(object);
+	public Banco inserir(Banco banco) {
+		if (validarInsercao(banco)) {
+			banco.setId(null);
+			return bancoRepository.save(banco);
+		}
+		return null;
 	}
 
 	@Override
@@ -46,5 +50,21 @@ public class BancoService implements ServiceInterface<Banco> {
 	@Override
 	public List<Banco> listarTodos() {
 		return bancoRepository.findAll();
+	}
+	
+	private boolean validarInsercao(Banco banco) {
+		if(bancoRepository.findByNome(banco.getNome()) != null) {
+			throw new ObjetoJaExisteException("Já existe um Banco com o mesmo Nome cadastrado!");
+		}
+		
+		if(bancoRepository.findByCodigo(banco.getCodigo()) != null) {
+			throw new ObjetoJaExisteException("Já existe um Banco com o mesmo Código cadastrado!");
+		}
+		
+		if(bancoRepository.findByCnpj(banco.getCnpj()) != null) {
+			throw new ObjetoJaExisteException("Já existe um Banco com o mesmo Cnpj cadastrado!");
+		}
+		
+		return true;
 	}
 }

@@ -3,6 +3,8 @@ package br.com.infoway.resource;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,7 @@ public class BancoResource implements ResourceInterface<Banco> {
 
 	@RequestMapping(method=RequestMethod.POST)
 	@Override
-	public ResponseEntity<Void> inserir(Banco t) {
+	public ResponseEntity<Void> inserir(@Valid Banco t) {
 		t = bancoService.inserir(t);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(t.getId()).toUri();
@@ -32,7 +34,7 @@ public class BancoResource implements ResourceInterface<Banco> {
 
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	@Override
-	public ResponseEntity<Void> atualizar(Banco t, Long id) {
+	public ResponseEntity<Void> atualizar(@Valid Banco t, Long id) {
 		t.setId(id);
 		t = bancoService.atualizar(t);
 		return ResponseEntity.noContent().build();

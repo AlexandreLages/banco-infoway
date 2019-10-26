@@ -8,7 +8,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+/**
+ * 
+ * @author Alexandre Lages
+ *
+ * Implementação da classe de modelo Agência
+ */
 
 @Entity
 public class Agencia implements Serializable {
@@ -18,13 +27,15 @@ public class Agencia implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull
+	@NotNull(message = "Preenchimento obrigatório!")
 	private Integer codigo;
 	
-	@NotNull
+	@NotEmpty(message = "Preenchimento obrigatório!")
+	@Size(min = 6, max = 50, message = "Deve conter entre 6 e 50 caracteres!")
 	private String nome;
 	
-	@NotNull
+	@NotEmpty(message = "Preenchimento obrigatório!")
+	@Size(min = 14, max = 14, message = "Deve conter exatamente 14 caracteres!")
 	private String cnpj;
 	
 	@ManyToOne
@@ -73,6 +84,14 @@ public class Agencia implements Serializable {
 
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
+	}
+
+	public Banco getBanco() {
+		return banco;
+	}
+
+	public void setBanco(Banco banco) {
+		this.banco = banco;
 	}
 
 	@Override
