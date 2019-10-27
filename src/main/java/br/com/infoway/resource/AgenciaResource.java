@@ -15,6 +15,13 @@ import br.com.infoway.interfaces.ResourceInterface;
 import br.com.infoway.model.Agencia;
 import br.com.infoway.service.AgenciaService;
 
+/**
+ * 
+ * @author Alexandre Lages
+ *
+ * Implementação dos resources de Agência
+ */
+
 @RestController
 @RequestMapping(value="/agencias")
 public class AgenciaResource implements ResourceInterface<Agencia> {
@@ -22,17 +29,27 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 	@Autowired
 	private AgenciaService agenciaService;
 
+	/**
+	 * Resource responsável por inserir uma agência
+	 * @param agencia
+	 * @return
+	 */
 	@RequestMapping(method=RequestMethod.POST, 
 			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
 			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-	@Override
-	public ResponseEntity<Void> inserir(Agencia t) {
-		t = agenciaService.inserir(t);
+	@Override	
+	public ResponseEntity<Void> inserir(Agencia agencia) {
+		agencia = agenciaService.inserir(agencia);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(t.getId()).toUri();
+				.path("/{id}").buildAndExpand(agencia.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-
+	
+	/**
+	 * Resource responsável por atualizar uma agência
+	 * @param agencia
+	 * @return
+	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT,
 			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
 			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -43,6 +60,11 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 		return ResponseEntity.noContent().build();
 	}
 
+	/**
+	 * Resource responsável por deletar uma agência
+	 * @param id da agência
+	 * @return
+	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE,
 			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
 			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -52,6 +74,11 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 		return ResponseEntity.noContent().build();
 	}
 
+	/**
+	 * Resource responsável por pesquisar uma agência
+	 * @param id da agência
+	 * @return
+	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.GET,
 			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
 			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -61,6 +88,11 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 		return ResponseEntity.ok().body(agencia);
 	}
 
+	/**
+	 * Resource responsável por listar todas as agências
+	 * @param
+	 * @return
+	 */
 	@RequestMapping(method=RequestMethod.GET,
 			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
 			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})

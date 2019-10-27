@@ -1,65 +1,63 @@
 package br.com.infoway.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import br.com.infoway.enums.TipoPessoa;
 
 /**
  * 
  * @author Alexandre Lages
  *
- * Implementação da classe de modelo Agência
+ * Implementação da classe modelo de Cliente
  */
 
 @Entity
-public class Agencia implements Serializable {
+public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotNull(message = "Preenchimento obrigatório!")
-	private Integer codigo;
 	
 	@NotEmpty(message = "Preenchimento obrigatório!")
 	@Size(min = 6, max = 50, message = "Deve conter entre 6 e 50 caracteres!")
 	private String nome;
 	
 	@NotEmpty(message = "Preenchimento obrigatório!")
-	@Size(min = 14, max = 14, message = "Deve conter exatamente 14 caracteres!")
-	private String cnpj;
+	@Size(min = 11, max = 14, message = "Deve conter entre 11 e 14 caracteres!")
+	private String cpfOuCnpj;
 	
-	@ManyToOne
-	@JoinColumn(name = "banco_id")
-	private Banco banco;
+	@NotNull(message = "Valor não pode ser nulo")
+	private Integer tipoPessoa;
 	
-	public Agencia() {
+	private List<Conta> contas = new ArrayList<>();
+	
+	public Cliente() {
 	}
 
 	/**
 	 * 
 	 * @param id
-	 * @param codigo
 	 * @param nome
-	 * @param cnpj
-	 * @param banco
+	 * @param cpfOuCnpj
+	 * @param tipoPessoa
 	 */
-	public Agencia(Long id, @NotNull Integer codigo, @NotNull String nome, @NotNull String cnpj, Banco banco) {
+	public Cliente(Long id, String nome, String cpfOuCnpj, TipoPessoa tipoPessoa) {
 		super();
 		this.id = id;
-		this.codigo = codigo;
 		this.nome = nome;
-		this.cnpj = cnpj;
-		this.banco = banco;
+		this.cpfOuCnpj = cpfOuCnpj;
+		this.tipoPessoa = tipoPessoa.getCodigo();
 	}
 
 	public Long getId() {
@@ -70,14 +68,6 @@ public class Agencia implements Serializable {
 		this.id = id;
 	}
 
-	public Integer getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
-	}
-
 	public String getNome() {
 		return nome;
 	}
@@ -86,20 +76,28 @@ public class Agencia implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getCnpj() {
-		return cnpj;
+	public String getCpfOuCnpj() {
+		return cpfOuCnpj;
 	}
 
-	public void setCnpj(String cnpj) {
-		this.cnpj = cnpj;
+	public void setCpfOuCnpj(String cpfOuCnpj) {
+		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
-	public Banco getBanco() {
-		return banco;
+	public Integer getTipoPessoa() {
+		return tipoPessoa;
 	}
 
-	public void setBanco(Banco banco) {
-		this.banco = banco;
+	public void setTipoPessoa(Integer tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
+
+	public List<Conta> getContas() {
+		return contas;
+	}
+
+	public void setContas(List<Conta> contas) {
+		this.contas = contas;
 	}
 
 	@Override
@@ -118,7 +116,7 @@ public class Agencia implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Agencia other = (Agencia) obj;
+		Cliente other = (Cliente) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

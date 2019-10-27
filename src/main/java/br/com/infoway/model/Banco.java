@@ -48,6 +48,13 @@ public class Banco implements Serializable {
 	public Banco() {
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param codigo
+	 * @param nome
+	 * @param cnpj
+	 */
 	public Banco(Long id, @NotNull Integer codigo, @NotNull String nome, @NotNull String cnpj) {
 		super();
 		this.id = id;

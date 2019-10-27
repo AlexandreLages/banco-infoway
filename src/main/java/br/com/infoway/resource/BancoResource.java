@@ -16,6 +16,13 @@ import br.com.infoway.interfaces.ResourceInterface;
 import br.com.infoway.model.Banco;
 import br.com.infoway.service.BancoService;
 
+/**
+ * 
+ * @author Alexandre Lages
+ *
+ * Implementação de resources de Banco
+ */
+
 @RestController
 @RequestMapping(value="/bancos")
 public class BancoResource implements ResourceInterface<Banco> {
@@ -23,6 +30,11 @@ public class BancoResource implements ResourceInterface<Banco> {
 	@Autowired
 	private BancoService bancoService;
 
+	/**
+	 * Resource responsável por inserir um banco
+	 * @param banco
+	 * @return
+	 */
 	@RequestMapping(method=RequestMethod.POST)
 	@Override
 	public ResponseEntity<Void> inserir(@Valid Banco t) {
@@ -32,6 +44,11 @@ public class BancoResource implements ResourceInterface<Banco> {
 		return ResponseEntity.created(uri).build();
 	}
 
+	/**
+	 * Resource responsável por atualizar um banco
+	 * @param banco e id do banco que está sendo atualizado
+	 * @return
+	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	@Override
 	public ResponseEntity<Void> atualizar(@Valid Banco t, Long id) {
@@ -40,6 +57,11 @@ public class BancoResource implements ResourceInterface<Banco> {
 		return ResponseEntity.noContent().build();
 	}
 
+	/**
+	 * Resource responsável por deletar um banco
+	 * @param id do banco que está sendo deletado
+	 * @return
+	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	@Override
 	public ResponseEntity<Void> deletar(Long id) {
@@ -47,6 +69,11 @@ public class BancoResource implements ResourceInterface<Banco> {
 		return ResponseEntity.noContent().build();
 	}
 
+	/**
+	 * Resource responsável por pesquisar um banco
+	 * @param id do banco pesquisado
+	 * @return
+	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	@Override
 	public ResponseEntity<Banco> pesquisarPorId(Long id) {
@@ -54,6 +81,11 @@ public class BancoResource implements ResourceInterface<Banco> {
 		return ResponseEntity.ok().body(banco);
 	}
 
+	/**
+	 * Resource responsável por listar todos os bancos
+	 * @param
+	 * @return
+	 */
 	@RequestMapping(method=RequestMethod.GET)
 	@Override
 	public ResponseEntity<List<Banco>> listarTodos() {
