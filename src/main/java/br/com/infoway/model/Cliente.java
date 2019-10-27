@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -40,6 +41,7 @@ public class Cliente implements Serializable {
 	@NotNull(message = "Valor não pode ser nulo")
 	private Integer tipoPessoa;
 	
+	@OneToMany(mappedBy = "cliente")
 	private List<Conta> contas = new ArrayList<>();
 	
 	public Cliente() {
