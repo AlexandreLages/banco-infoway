@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.infoway.exception.ObjetoJaExisteException;
 import br.com.infoway.exception.ObjetoNaoEncontradoException;
 import br.com.infoway.interfaces.ServiceInterface;
 import br.com.infoway.model.Cliente;
@@ -31,11 +30,12 @@ public class ClienteService implements ServiceInterface<Cliente>{
 	 */
 	@Override
 	public Cliente inserir(Cliente t) {
-		if(validarInsercao(t)) {
-			t.setId(null);
-			clienteRepository.save(t);
+		System.out.println("CPF: " + t.getNome());
+		Cliente cliente = clienteRepository.findByCpfOuCnpj(t.getCpfOuCnpj());
+		if(cliente == null) {
+			return clienteRepository.save(t);
 		}
-		return null;
+		return clienteRepository.save(cliente);
 	}
 
 	/**
@@ -81,17 +81,5 @@ public class ClienteService implements ServiceInterface<Cliente>{
 	@Override
 	public List<Cliente> listarTodos() {
 		return clienteRepository.findAll();
-	}
-	
-	/**
-	 * Metodo responsavel por validar a insercao de um novo Cliente na base de dados
-	 * @param cliente
-	 * @return boolean
-	 */
-	private boolean validarInsercao(Cliente cliente) {
-		if(clienteRepository.findByCpfOuCnpj(cliente.getCpfOuCnpj()) != null) {
-			throw new ObjetoJaExisteException("Já existe um Cliente com o mesmo CPF/CNPJ cadastrado!");
-		}
-		return true;
 	}
 }

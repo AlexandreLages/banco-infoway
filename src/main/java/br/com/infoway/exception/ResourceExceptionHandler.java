@@ -46,4 +46,10 @@ public class ResourceExceptionHandler {
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validacaoException);
 	}
+	
+	@ExceptionHandler(SaldoInsuficienteException.class)
+	public ResponseEntity<TratamentoException> saldoInsuficiente(SaldoInsuficienteException ex, HttpServletRequest request) {
+		TratamentoException tratamentoException = new TratamentoException(HttpStatus.BAD_REQUEST.value(), "Saldo insuficiente", System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(tratamentoException);
+	}
 }

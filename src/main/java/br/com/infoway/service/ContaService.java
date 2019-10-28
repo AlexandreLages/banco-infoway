@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import br.com.infoway.exception.ObjetoJaExisteException;
 import br.com.infoway.exception.ObjetoNaoEncontradoException;
 import br.com.infoway.interfaces.ServiceInterface;
+import br.com.infoway.model.Agencia;
+import br.com.infoway.model.Cliente;
 import br.com.infoway.model.Conta;
 import br.com.infoway.repository.ContaRepository;
 
@@ -23,6 +25,12 @@ public class ContaService implements ServiceInterface<Conta>{
 
 	@Autowired
 	private ContaRepository contaRepository;
+	
+	@Autowired
+	private ClienteService clienteService;
+	
+	@Autowired
+	private AgenciaService agenciaService;
 
 	/**
 	 * Método responsável por inserir uma Conta na base de dados
@@ -32,7 +40,21 @@ public class ContaService implements ServiceInterface<Conta>{
 	@Override
 	public Conta inserir(Conta t) {
 		if(validarInsercao(t)) {
-			t.setId(null);
+			Agencia agencia = agenciaService.pesquisarPorId(t.getAgencia().getId());
+			agencia.getContas().add(t);
+			
+			System.out.println("Agencia:" + agencia.getNome());
+			System.out.println("Cliente: " + t.getCliente().getNome());
+			
+			Cliente cliente = clienteService.inserir(t.getCliente());
+			cliente.getContas().add(t);
+			
+			t.setAgencia(agencia);
+			t.setCliente(cliente);
+			
+			agenciaService.atualizar(agencia);
+			clienteService.atualizar(t.getCliente());
+			
 			return contaRepository.save(t);
 		}
 		return null;

@@ -26,6 +26,7 @@ public class Movimentacao implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@JsonFormat(shape=JsonFormat.Shape.STRING)
 	@NotNull(message = "Preenchimento obrigatório!")
 	@Digits(integer = 10, fraction = 2, message = "O valor não está de acordo com o padrão!")
 	private BigDecimal valor;

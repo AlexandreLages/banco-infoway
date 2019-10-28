@@ -14,7 +14,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 
@@ -34,14 +34,15 @@ public class Conta implements Serializable {
 	@NotNull(message = "O valor não pode ser nulo!")
 	private Integer numero;
 	
+	@JsonFormat(shape=JsonFormat.Shape.STRING)
 	@Digits(integer = 10, fraction = 2, message = "O valor não está de acordo com o padrão!")
 	private BigDecimal saldo;
+	
 	
 	@NotEmpty(message = "Preenchimento obrigatório!")
 	@Size(min = 6, max = 12, message = "Deve ter entre 6 e 12 caracteres")
 	private String senha;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
@@ -112,6 +113,9 @@ public class Conta implements Serializable {
 	}
 	
 	public BigDecimal saque(BigDecimal valor) {
+		if(valor.compareTo(saldo) == 1) {
+			
+		}
 		saldo.subtract(valor);
 		return saldo;
 	}

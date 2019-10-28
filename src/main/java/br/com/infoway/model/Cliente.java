@@ -13,6 +13,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.infoway.enums.TipoPessoa;
 
 /**
@@ -41,6 +43,7 @@ public class Cliente implements Serializable {
 	@NotNull(message = "Valor não pode ser nulo")
 	private Integer tipoPessoa;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
 	private List<Conta> contas = new ArrayList<>();
 	

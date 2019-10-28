@@ -1,6 +1,8 @@
 package br.com.infoway.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,9 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 
@@ -41,6 +46,10 @@ public class Agencia implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "banco_id")
 	private Banco banco;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "agencia")
+	private List<Conta> contas = new ArrayList<>();
 	
 	public Agencia() {
 	}
@@ -100,6 +109,14 @@ public class Agencia implements Serializable {
 
 	public void setBanco(Banco banco) {
 		this.banco = banco;
+	}
+
+	public List<Conta> getContas() {
+		return contas;
+	}
+
+	public void setContas(List<Conta> contas) {
+		this.contas = contas;
 	}
 
 	@Override
