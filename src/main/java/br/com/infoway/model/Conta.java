@@ -34,7 +34,7 @@ public class Conta implements Serializable {
 	@NotNull(message = "O valor não pode ser nulo!")
 	private Integer numero;
 	
-	@Digits(integer = 0, fraction = 2, message = "O valor não está de acordo com o padrão!")
+	@Digits(integer = 10, fraction = 2, message = "O valor não está de acordo com o padrão!")
 	private BigDecimal saldo;
 	
 	@NotEmpty(message = "Preenchimento obrigatório!")
