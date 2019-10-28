@@ -57,13 +57,31 @@ public class ContaResource implements ResourceInterface<Conta> {
 		return null;
 	}
 
+	/**
+	 * Resource responsável por pesquisar uma conta
+	 * @param id da agência
+	 * @return
+	 */
+	@RequestMapping(value="/{id}", method=RequestMethod.GET,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@Override
 	public ResponseEntity<Conta> pesquisarPorId(Long id) {
-		return null;
+		Conta conta = contaService.pesquisarPorId(id);
+		return ResponseEntity.ok().body(conta);
 	}
 
+	/**
+	 * Resource responsável por listar todas as contas
+	 * @param
+	 * @return
+	 */
+	@RequestMapping(method=RequestMethod.GET,
+			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 	@Override
 	public ResponseEntity<List<Conta>> listarTodos() {
-		return null;
+		List<Conta> listaConta = contaService.listarTodos();
+		return ResponseEntity.ok().body(listaConta);
 	}
 }

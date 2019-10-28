@@ -2,6 +2,8 @@ package br.com.infoway.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,12 +11,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import br.com.infoway.exception.SaldoInsuficienteException;
 
 /**
  * 
@@ -38,7 +43,6 @@ public class Conta implements Serializable {
 	@Digits(integer = 10, fraction = 2, message = "O valor não está de acordo com o padrão!")
 	private BigDecimal saldo;
 	
-	
 	@NotEmpty(message = "Preenchimento obrigatório!")
 	@Size(min = 6, max = 12, message = "Deve ter entre 6 e 12 caracteres")
 	private String senha;
@@ -50,6 +54,9 @@ public class Conta implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "agencia_id")
 	private Agencia agencia;
+	
+	@OneToMany(mappedBy = "conta")
+	private List<Movimentacao> movimentacoes = new ArrayList<>();
 	
 	public Conta() {
 	}
@@ -112,16 +119,25 @@ public class Conta implements Serializable {
 		this.agencia = agencia;
 	}
 	
+	public List<Movimentacao> getMovimentacoes() {
+		return movimentacoes;
+	}
+
+	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
+		this.movimentacoes = movimentacoes;
+	}
+
 	public BigDecimal saque(BigDecimal valor) {
 		if(valor.compareTo(saldo) == 1) {
-			
+			throw new SaldoInsuficienteException("A Conta " + numero + 
+					" não possui saldo suficiente para realizar a transação!");
 		}
-		saldo.subtract(valor);
+		saldo = saldo.subtract(valor);
 		return saldo;
 	}
 	
 	public BigDecimal deposito(BigDecimal valor) {
-		saldo.add(valor);
+		saldo = saldo.add(valor);
 		return saldo;
 	}
 

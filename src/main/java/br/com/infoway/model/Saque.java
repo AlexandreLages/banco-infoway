@@ -13,7 +13,7 @@ public class Saque extends Movimentacao {
 		super();
 	}
 
-	public Saque(Long id, BigDecimal valor, Conta conta, Date data) {
-		super(id, valor, conta, data);
+	public Saque(Long id, BigDecimal valor, Date data, Conta conta) {
+		super(id, valor, data, conta);
 	}
 }

@@ -30,7 +30,6 @@ public class ClienteService implements ServiceInterface<Cliente>{
 	 */
 	@Override
 	public Cliente inserir(Cliente t) {
-		System.out.println("CPF: " + t.getNome());
 		Cliente cliente = clienteRepository.findByCpfOuCnpj(t.getCpfOuCnpj());
 		if(cliente == null) {
 			return clienteRepository.save(t);

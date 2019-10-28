@@ -13,7 +13,7 @@ public class Deposito extends Movimentacao {
 		super();
 	}
 
-	public Deposito(Long id, BigDecimal valor, Conta conta, Date data) {
-		super(id, valor, conta, data);
+	public Deposito(Long id, BigDecimal valor, Date data, Conta conta) {
+		super(id, valor, data, conta);
 	}
 }

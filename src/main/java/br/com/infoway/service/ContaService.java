@@ -43,9 +43,6 @@ public class ContaService implements ServiceInterface<Conta>{
 			Agencia agencia = agenciaService.pesquisarPorId(t.getAgencia().getId());
 			agencia.getContas().add(t);
 			
-			System.out.println("Agencia:" + agencia.getNome());
-			System.out.println("Cliente: " + t.getCliente().getNome());
-			
 			Cliente cliente = clienteService.inserir(t.getCliente());
 			cliente.getContas().add(t);
 			
@@ -115,5 +112,18 @@ public class ContaService implements ServiceInterface<Conta>{
 			throw new ObjetoJaExisteException("Já existe uma Conta com o mesmo Número cadastrado!");
 		}
 		return true;
+	}
+	
+	/**
+	 * Metodo responsavel por pesquisar uma conta pelo seu numero
+	 * @param numero
+	 * @return Conta
+	 */
+	public Conta pesquisarPorNumero(Integer numero) {
+		Conta conta = contaRepository.findByNumero(numero);
+		if(conta == null) {
+			throw new ObjetoNaoEncontradoException("Conta " + numero + " inválida!");
+		}
+		return conta;
 	}
 }

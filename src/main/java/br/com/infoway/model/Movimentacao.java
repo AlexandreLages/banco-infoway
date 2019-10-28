@@ -41,12 +41,12 @@ public class Movimentacao implements Serializable {
 	public Movimentacao() {
 	}
 
-	public Movimentacao(Long id, BigDecimal valor, Conta conta, Date data) {
+	public Movimentacao(Long id, BigDecimal valor, Date data, Conta conta) {
 		super();
 		this.id = id;
 		this.valor = valor;
-		this.conta = conta;
 		this.data = data;
+		this.conta = conta;
 	}
 
 	public Long getId() {
@@ -65,20 +65,20 @@ public class Movimentacao implements Serializable {
 		this.valor = valor;
 	}
 
-	public Conta getConta() {
-		return conta;
-	}
-
-	public void setConta(Conta conta) {
-		this.conta = conta;
-	}
-
 	public Date getData() {
 		return data;
 	}
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
 	@Override
