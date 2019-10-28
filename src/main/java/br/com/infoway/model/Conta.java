@@ -110,6 +110,16 @@ public class Conta implements Serializable {
 	public void setAgencia(Agencia agencia) {
 		this.agencia = agencia;
 	}
+	
+	public BigDecimal saque(BigDecimal valor) {
+		saldo.subtract(valor);
+		return saldo;
+	}
+	
+	public BigDecimal deposito(BigDecimal valor) {
+		saldo.add(valor);
+		return saldo;
+	}
 
 	@Override
 	public int hashCode() {
