@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.infoway.enums.TipoMovimentacao;
 import br.com.infoway.interfaces.ServiceInterface;
 import br.com.infoway.model.Conta;
 import br.com.infoway.model.Transferencia;
@@ -34,7 +35,9 @@ public class TransferenciaService implements ServiceInterface<Transferencia>{
 		
 		Conta contaCreditada = contaService.pesquisarPorNumero(t.getContaDestino().getNumero());
 		contaCreditada.deposito(t.getValor());
+		contaCreditada.getMovimentacoes().add(t);
 		
+		t.setTipo(TipoMovimentacao.TRANSFERENCIA);
 		t.setConta(contaDebitada);
 		t.setContaDestino(contaCreditada);
 		t.setData(new Date());

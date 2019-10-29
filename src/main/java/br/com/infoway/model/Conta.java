@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.infoway.exception.SaldoInsuficienteException;
 
@@ -55,6 +56,7 @@ public class Conta implements Serializable {
 	@JoinColumn(name = "agencia_id")
 	private Agencia agencia;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "conta")
 	private List<Movimentacao> movimentacoes = new ArrayList<>();
 	

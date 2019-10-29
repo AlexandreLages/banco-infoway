@@ -17,6 +17,8 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.infoway.enums.TipoMovimentacao;
+
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 public class Movimentacao implements Serializable {
@@ -38,15 +40,18 @@ public class Movimentacao implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date data;
 	
+	private Integer tipo;
+	
 	public Movimentacao() {
 	}
 
-	public Movimentacao(Long id, BigDecimal valor, Date data, Conta conta) {
+	public Movimentacao(Long id, BigDecimal valor, Date data, Conta conta, TipoMovimentacao tipoMovimentacao) {
 		super();
 		this.id = id;
 		this.valor = valor;
 		this.data = data;
 		this.conta = conta;
+		this.tipo = tipoMovimentacao.getCodigo();
 	}
 
 	public Long getId() {
@@ -79,6 +84,14 @@ public class Movimentacao implements Serializable {
 
 	public void setConta(Conta conta) {
 		this.conta = conta;
+	}
+	
+	public TipoMovimentacao getTipo() {
+		return TipoMovimentacao.toEnum(tipo);
+	}
+
+	public void setTipo(TipoMovimentacao tipo) {
+		this.tipo = tipo.getCodigo();
 	}
 
 	@Override

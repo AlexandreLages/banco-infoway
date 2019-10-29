@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.infoway.model.Conta;
-import br.com.infoway.model.Movimentacao;
+import br.com.infoway.model.Transferencia;
 
 /**
  * 
@@ -13,7 +13,7 @@ import br.com.infoway.model.Movimentacao;
  * 
  * Implementação do repository de Movimentacao
  */
-public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long>  {
+public interface TransferenciaRepository extends JpaRepository<Transferencia, Long>  {
 
-	List<Movimentacao> findByConta(Conta conta);
+	List<Transferencia> findByContaDestino(Conta conta);
 }

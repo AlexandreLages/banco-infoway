@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.infoway.enums.TipoMovimentacao;
 import br.com.infoway.interfaces.ServiceInterface;
 import br.com.infoway.model.Conta;
 import br.com.infoway.model.Deposito;
@@ -32,6 +33,7 @@ public class DepositoService implements ServiceInterface<Deposito>{
 		conta.deposito(t.getValor());
 		conta.getMovimentacoes().add(t);
 		
+		t.setTipo(TipoMovimentacao.DEPOSITO);
 		t.setConta(conta);
 		t.setData(new Date());
 		

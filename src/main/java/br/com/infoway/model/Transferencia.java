@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import br.com.infoway.enums.TipoMovimentacao;
+
 @Entity
 public class Transferencia extends Movimentacao {
 	private static final long serialVersionUID = 1L;
@@ -23,7 +25,7 @@ public class Transferencia extends Movimentacao {
 	}
 
 	public Transferencia(Long id, BigDecimal valor, Date data, Conta conta, Conta contaDestino) {
-		super(id, valor, data, conta);
+		super(id, valor, data, conta, TipoMovimentacao.TRANSFERENCIA);
 		this.contaDestino = contaDestino;
 	}
 

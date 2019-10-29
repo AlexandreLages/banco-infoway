@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.infoway.enums.TipoMovimentacao;
+import br.com.infoway.exception.SenhaIncorretaException;
 import br.com.infoway.interfaces.ServiceInterface;
 import br.com.infoway.model.Conta;
 import br.com.infoway.model.Saque;
@@ -29,9 +31,16 @@ public class SaqueService implements ServiceInterface<Saque>{
 	@Override
 	public Saque inserir(Saque t) {
 		Conta conta = contaService.pesquisarPorNumero(t.getConta().getNumero());
+		
+		if(conta.getSenha().equals(t.getConta().getSenha()) == false) {
+			throw new SenhaIncorretaException("A senha para a conta " + conta.getNumero() + 
+					" está incorreta!");
+		}
+		
 		conta.saque(t.getValor());
 		conta.getMovimentacoes().add(t);
 		
+		t.setTipo(TipoMovimentacao.SAQUE);
 		t.setConta(conta);
 		t.setData(new Date());
 		
@@ -41,25 +50,20 @@ public class SaqueService implements ServiceInterface<Saque>{
 
 	@Override
 	public Saque atualizar(Saque t) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void deletar(Long id) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public Saque pesquisarPorId(Long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Saque> listarTodos() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

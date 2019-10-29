@@ -49,7 +49,13 @@ public class ResourceExceptionHandler {
 	
 	@ExceptionHandler(SaldoInsuficienteException.class)
 	public ResponseEntity<TratamentoException> saldoInsuficiente(SaldoInsuficienteException ex, HttpServletRequest request) {
-		TratamentoException tratamentoException = new TratamentoException(HttpStatus.BAD_REQUEST.value(), "Saldo insuficiente", System.currentTimeMillis());
+		TratamentoException tratamentoException = new TratamentoException(HttpStatus.FORBIDDEN.value(), ex.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(tratamentoException);
+	}
+
+	@ExceptionHandler(SenhaIncorretaException.class)
+	public ResponseEntity<TratamentoException> senhaIncorreta(SenhaIncorretaException ex, HttpServletRequest request) {
+		TratamentoException tratamentoException = new TratamentoException(HttpStatus.FORBIDDEN.value(), ex.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(tratamentoException);
 	}
 }

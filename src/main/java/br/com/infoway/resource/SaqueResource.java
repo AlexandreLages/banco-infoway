@@ -35,7 +35,6 @@ public class SaqueResource implements ResourceInterface<Saque> {
 
 	@Override
 	public ResponseEntity<Void> atualizar(Saque t, Long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
