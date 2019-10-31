@@ -37,7 +37,7 @@ public class AgenciaService implements ServiceInterface<Agencia> {
 	@Override
 	public Agencia inserir(Agencia agencia) {
 		if (validarInsercao(agencia)) {
-			Banco banco = bancoService.pesquisarPorId(agencia.getBanco().getId());
+			Banco banco = bancoService.pesquisarPorCodigo(agencia.getBanco().getCodigo());
 			banco.getAgencias().add(agencia);
 			agencia.setBanco(banco);
 			bancoService.atualizar(banco);
@@ -88,6 +88,14 @@ public class AgenciaService implements ServiceInterface<Agencia> {
 	@Override
 	public List<Agencia> listarTodos() {
 		return agenciaRepository.findAll();
+	}
+	
+	public Agencia pesquisarPorCodigo(Integer codigo) {
+		Agencia agencia = agenciaRepository.findByCodigo(codigo); 
+		if(agencia == null) {
+			throw new ObjetoNaoEncontradoException("Agência inválida!");
+		}
+		return agencia;
 	}
 	
 	/**

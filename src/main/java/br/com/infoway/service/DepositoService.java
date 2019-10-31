@@ -53,12 +53,22 @@ public class DepositoService implements ServiceInterface<Deposito>{
 	}
 
 	@Override
+	/**
+	 * Método responsável por desfazer um deposito na base de dados
+	 * @param id do deposito
+	 * @return void
+	 */
 	public void deletar(Long id) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
+	/**
+	 * Método responsável por pesquisar um deposito na base de dados
+	 * @param id deposito
+	 * @return deposito
+	 */
 	public Deposito pesquisarPorId(Long id) {
 		// TODO Auto-generated method stub
 		return null;

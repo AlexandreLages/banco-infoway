@@ -85,6 +85,15 @@ public class BancoService implements ServiceInterface<Banco> {
 	}
 	
 	/**
+	 * Metodo que pesquisa um banco pelo seu código
+	 * @param codigo
+	 * @return
+	 */
+	public Banco pesquisarPorCodigo(Integer codigo) {
+		return bancoRepository.findByCodigo(codigo);
+	}
+	
+	/**
 	 * Metodo responsavel por validar a insercao de um novo banco na base de dados
 	 * Valida por nome, codigo e cnpj
 	 * @param banco
