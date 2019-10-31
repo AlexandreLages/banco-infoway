@@ -16,7 +16,7 @@ import br.com.infoway.repository.BancoRepository;
  * 
  * @author Alexandre Lages
  *
- * Implementação do service de Banco
+ * Implementação do service responsável pela regra de negócio de Banco
  */
 
 @Service
@@ -26,9 +26,9 @@ public class BancoService implements ServiceInterface<Banco> {
 	private BancoRepository bancoRepository;
 
 	/**
-	 * Service responsável por inserir um Banco na base de dados
+	 * Método service responsável por inserir um Banco na base de dados
 	 * @param banco
-	 * @return Banco
+	 * @return banco
 	 */
 	@Override
 	public Banco inserir(Banco banco) {
@@ -40,9 +40,9 @@ public class BancoService implements ServiceInterface<Banco> {
 	}
 
 	/**
-	 * Service responsável por atualizar um Banco na base de dados
+	 * Método service responsável por atualizar um Banco na base de dados
 	 * @param banco
-	 * @return Banco
+	 * @return banco
 	 */
 	@Override
 	public Banco atualizar(Banco banco) {
@@ -51,9 +51,9 @@ public class BancoService implements ServiceInterface<Banco> {
 	}
 
 	/**
-	 * Service responsável por deletar um Banco da base de dados
+	 * Método service responsável por deletar um Banco da base de dados
 	 * @param banco
-	 * @return Banco
+	 * @return void
 	 */
 	@Override
 	public void deletar(Long id) {		
@@ -62,9 +62,9 @@ public class BancoService implements ServiceInterface<Banco> {
 	}
 
 	/**
-	 * Service responsável por pesquisar um Banco na base de dados
+	 * Método service responsável por pesquisar um Banco na base de dados
 	 * @param banco
-	 * @return Banco
+	 * @return banco
 	 */
 	@Override
 	public Banco pesquisarPorId(Long id) {
@@ -75,7 +75,7 @@ public class BancoService implements ServiceInterface<Banco> {
 	}
 
 	/**
-	 * Service responsável por listar todos os Bancos da base de dados
+	 * Método service responsável por listar todos os Bancos da base de dados
 	 * @param 
 	 * @return List<Banco>
 	 */
@@ -86,6 +86,7 @@ public class BancoService implements ServiceInterface<Banco> {
 	
 	/**
 	 * Metodo responsavel por validar a insercao de um novo banco na base de dados
+	 * Valida por nome, codigo e cnpj
 	 * @param banco
 	 * @return
 	 */

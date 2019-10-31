@@ -25,7 +25,9 @@ import br.com.infoway.service.ContaService;
  */
 
 @RestController
-@RequestMapping(value="/contas")
+@RequestMapping(value="/contas", 
+	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
+	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 public class ContaResource implements ResourceInterface<Conta> {
 
 	@Autowired
@@ -36,9 +38,7 @@ public class ContaResource implements ResourceInterface<Conta> {
 	 * @param conta
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.POST, 
-			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(method=RequestMethod.POST)
 	@Override
 	public ResponseEntity<Void> inserir(@Valid Conta t) {
 		t = contaService.inserir(t);
@@ -62,9 +62,7 @@ public class ContaResource implements ResourceInterface<Conta> {
 	 * @param id da agência
 	 * @return
 	 */
-	@RequestMapping(value="/{id}", method=RequestMethod.GET,
-			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	@Override
 	public ResponseEntity<Conta> pesquisarPorId(Long id) {
 		Conta conta = contaService.pesquisarPorId(id);
@@ -76,9 +74,7 @@ public class ContaResource implements ResourceInterface<Conta> {
 	 * @param
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.GET,
-			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(method=RequestMethod.GET)
 	@Override
 	public ResponseEntity<List<Conta>> listarTodos() {
 		List<Conta> listaConta = contaService.listarTodos();

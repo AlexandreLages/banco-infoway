@@ -16,15 +16,15 @@ import br.com.infoway.model.Saque;
 import br.com.infoway.service.SaqueService;
 
 @RestController
-@RequestMapping(value="/saques")
+@RequestMapping(value="/saques", 
+	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
+	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 public class SaqueResource implements ResourceInterface<Saque> {
 
 	@Autowired
 	private SaqueService saqueService;
 	
-	@RequestMapping(method=RequestMethod.POST, 
-			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(method=RequestMethod.POST)
 	@Override
 	public ResponseEntity<Void> inserir(Saque t) {
 		t = saqueService.inserir(t);
@@ -55,6 +55,4 @@ public class SaqueResource implements ResourceInterface<Saque> {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 }

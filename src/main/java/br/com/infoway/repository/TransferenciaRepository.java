@@ -15,5 +15,10 @@ import br.com.infoway.model.Transferencia;
  */
 public interface TransferenciaRepository extends JpaRepository<Transferencia, Long>  {
 
+	/**
+	 * Lista as trasnferências recebidas por uma conta
+	 * @param conta
+	 * @return List<Transferencia>
+	 */
 	List<Transferencia> findByContaDestino(Conta conta);
 }

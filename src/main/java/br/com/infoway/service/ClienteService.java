@@ -15,7 +15,7 @@ import br.com.infoway.repository.ClienteRepository;
  * 
  * @author Alexandre Lages
  * 
- * Implementação do service de Cliente
+ * Implementação do service responsavel pela regra de negócio de Cliente
  */
 @Service
 public class ClienteService implements ServiceInterface<Cliente>{
@@ -26,32 +26,32 @@ public class ClienteService implements ServiceInterface<Cliente>{
 	/**
 	 * Método responsável por inserir um Cliente na base de dados
 	 * @param cliente
-	 * @return Cliente
+	 * @return cliente
 	 */
 	@Override
-	public Cliente inserir(Cliente t) {
-		Cliente cliente = clienteRepository.findByCpfOuCnpj(t.getCpfOuCnpj());
-		if(cliente == null) {
-			return clienteRepository.save(t);
+	public Cliente inserir(Cliente cliente) {
+		Cliente clientePesquisado = clienteRepository.findByCpfOuCnpj(cliente.getCpfOuCnpj());
+		if(clientePesquisado == null) {
+			return clienteRepository.save(cliente);
 		}
-		return clienteRepository.save(cliente);
+		return clienteRepository.save(clientePesquisado);
 	}
 
 	/**
 	 * Método responsável por atualizar um Cliente na base de dados
-	 * @param banco
-	 * @return Banco
+	 * @param cliente
+	 * @return cliente
 	 */
 	@Override
-	public Cliente atualizar(Cliente t) {
-		pesquisarPorId(t.getId());		
-		return clienteRepository.save(t);
+	public Cliente atualizar(Cliente cliente) {
+		pesquisarPorId(cliente.getId());		
+		return clienteRepository.save(cliente);
 	}
 
 	/**
 	 * Método responsável por deletar um Cliente da base de dados
-	 * @param banco
-	 * @return Banco
+	 * @param id do cliente a ser deletado
+	 * @return void
 	 */
 	@Override
 	public void deletar(Long id) {
@@ -61,8 +61,8 @@ public class ClienteService implements ServiceInterface<Cliente>{
 
 	/**
 	 * Método responsável por pesquisar um Cliente por Id na base de dados
-	 * @param banco
-	 * @return Banco
+	 * @param id do cliente pesquisado 
+	 * @return cliente
 	 */
 	@Override
 	public Cliente pesquisarPorId(Long id) {

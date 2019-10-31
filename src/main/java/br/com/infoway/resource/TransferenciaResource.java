@@ -16,15 +16,15 @@ import br.com.infoway.model.Transferencia;
 import br.com.infoway.service.TransferenciaService;
 
 @RestController
-@RequestMapping(value="/transferencias")
+@RequestMapping(value="/transferencias", 
+	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
+	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 public class TransferenciaResource implements ResourceInterface<Transferencia> {
 
 	@Autowired
 	private TransferenciaService transferenciaService;
 	
-	@RequestMapping(method=RequestMethod.POST, 
-			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(method=RequestMethod.POST)
 	@Override
 	public ResponseEntity<Void> inserir(Transferencia t) {
 		t = transferenciaService.inserir(t);

@@ -12,5 +12,10 @@ import br.com.infoway.model.Cliente;
  */
 public interface ClienteRepository extends JpaRepository<Cliente, Long>  {
 
+	/**
+	 * Pesquisa um cliente por cpfOuCnpj
+	 * @param cpfOuCnpj
+	 * @return cliente
+	 */
 	Cliente findByCpfOuCnpj(String cpfOuCnpj);
 }

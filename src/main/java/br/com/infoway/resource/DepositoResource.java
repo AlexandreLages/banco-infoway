@@ -16,15 +16,15 @@ import br.com.infoway.model.Deposito;
 import br.com.infoway.service.DepositoService;
 
 @RestController
-@RequestMapping(value="/depositos")
+@RequestMapping(value="/depositos", 
+	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
+	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 public class DepositoResource implements ResourceInterface<Deposito> {
 
 	@Autowired
 	private DepositoService depositoService;
 	
-	@RequestMapping(method=RequestMethod.POST, 
-			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(method=RequestMethod.POST)
 	@Override
 	public ResponseEntity<Void> inserir(Deposito t) {
 		t = depositoService.inserir(t);

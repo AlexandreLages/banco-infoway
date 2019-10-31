@@ -12,5 +12,10 @@ import br.com.infoway.model.Conta;
  */
 public interface ContaRepository extends JpaRepository<Conta, Long>  {
 
+	/**
+	 * Retorna uma conta por numero
+	 * @param numero
+	 * @return conta
+	 */
 	Conta findByNumero(Integer numero);
 }

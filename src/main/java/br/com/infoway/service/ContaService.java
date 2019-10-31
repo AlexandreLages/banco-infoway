@@ -18,7 +18,7 @@ import br.com.infoway.repository.ContaRepository;
  * 
  * @author Alexandre Lages
  * 
- * Implementação do service de Conta
+ * Implementação do service responsavel pela regra de negocio de Conta
  */
 @Service
 public class ContaService implements ServiceInterface<Conta>{
@@ -34,25 +34,25 @@ public class ContaService implements ServiceInterface<Conta>{
 
 	/**
 	 * Método responsável por inserir uma Conta na base de dados
-	 * @param t conta a ser adicionada
-	 * @return Conta
+	 * @param conta
+	 * @return conta
 	 */
 	@Override
-	public Conta inserir(Conta t) {
-		if(validarInsercao(t)) {
-			Agencia agencia = agenciaService.pesquisarPorId(t.getAgencia().getId());
-			agencia.getContas().add(t);
+	public Conta inserir(Conta conta) {
+		if(validarInsercao(conta)) {
+			Agencia agencia = agenciaService.pesquisarPorId(conta.getAgencia().getId());
+			agencia.getContas().add(conta);
 			
-			Cliente cliente = clienteService.inserir(t.getCliente());
-			cliente.getContas().add(t);
+			Cliente cliente = clienteService.inserir(conta.getCliente());
+			cliente.getContas().add(conta);
 			
-			t.setAgencia(agencia);
-			t.setCliente(cliente);
+			conta.setAgencia(agencia);
+			conta.setCliente(cliente);
 			
 			agenciaService.atualizar(agencia);
-			clienteService.atualizar(t.getCliente());
+			clienteService.atualizar(conta.getCliente());
 			
-			return contaRepository.save(t);
+			return contaRepository.save(conta);
 		}
 		return null;
 	}
@@ -63,14 +63,14 @@ public class ContaService implements ServiceInterface<Conta>{
 	 * @return Conta
 	 */
 	@Override
-	public Conta atualizar(Conta t) {
-		pesquisarPorId(t.getId());
-		return contaRepository.save(t);
+	public Conta atualizar(Conta conta) {
+		pesquisarPorId(conta.getId());
+		return contaRepository.save(conta);
 	}
 
 	/**
 	 * Método responsável por deletar uma Conta da base de dados
-	 * @param id
+	 * @param id da conta a ser deletada
 	 * @return void
 	 */
 	@Override
@@ -81,7 +81,7 @@ public class ContaService implements ServiceInterface<Conta>{
 	
 	/**
 	 * Método responsável por pesquisar uma Conta por Id na base de dados
-	 * @param conta
+	 * @param id da conta pesquisada
 	 * @return Conta
 	 */
 	@Override
@@ -95,7 +95,7 @@ public class ContaService implements ServiceInterface<Conta>{
 	/**
 	 * Método responsável por listar todas as Contas da base de dados
 	 * @param 
-	 * @return List<Cliente>
+	 * @return List<Conta>
 	 */
 	@Override
 	public List<Conta> listarTodos() {
@@ -116,7 +116,7 @@ public class ContaService implements ServiceInterface<Conta>{
 	
 	/**
 	 * Metodo responsavel por pesquisar uma conta pelo seu numero
-	 * @param numero
+	 * @param numero da conta
 	 * @return Conta
 	 */
 	public Conta pesquisarPorNumero(Integer numero) {

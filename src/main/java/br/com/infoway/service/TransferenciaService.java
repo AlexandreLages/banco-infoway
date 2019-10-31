@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.infoway.enums.TipoMovimentacao;
+import br.com.infoway.exception.SenhaIncorretaException;
 import br.com.infoway.interfaces.ServiceInterface;
 import br.com.infoway.model.Conta;
 import br.com.infoway.model.Transferencia;
@@ -16,7 +17,8 @@ import br.com.infoway.repository.MovimentacaoRepository;
  * 
  * @author Alexandre Lages
  * 
- * Implementação do service de Movimentação
+ * Implementação do service responsavel pela regra de negocios de Movimentação do tipo
+ * transferencia
  */
 @Service
 public class TransferenciaService implements ServiceInterface<Transferencia>{
@@ -28,23 +30,34 @@ public class TransferenciaService implements ServiceInterface<Transferencia>{
 	private ContaService contaService;
 
 	@Override
-	public Transferencia inserir(Transferencia t) {
-		Conta contaDebitada = contaService.pesquisarPorNumero(t.getConta().getNumero());
-		contaDebitada.saque(t.getValor());
-		contaDebitada.getMovimentacoes().add(t);
+	/**
+	 * Método responsável por inserir uma transferencia na base de dados
+	 * @param transferencia
+	 * @return transferencia
+	 */
+	public Transferencia inserir(Transferencia transferencia) {
+		Conta contaDebitada = contaService.pesquisarPorNumero(transferencia.getConta().getNumero());
 		
-		Conta contaCreditada = contaService.pesquisarPorNumero(t.getContaDestino().getNumero());
-		contaCreditada.deposito(t.getValor());
-		contaCreditada.getMovimentacoes().add(t);
+		if(contaDebitada.getSenha().equals(transferencia.getConta().getSenha()) == false) {
+			throw new SenhaIncorretaException("A senha para a conta " + contaDebitada.getNumero() + 
+					" está incorreta!");
+		}
 		
-		t.setTipo(TipoMovimentacao.TRANSFERENCIA);
-		t.setConta(contaDebitada);
-		t.setContaDestino(contaCreditada);
-		t.setData(new Date());
+		contaDebitada.debitar(transferencia.getValor());
+		contaDebitada.getMovimentacoes().add(transferencia);
+		
+		Conta contaCreditada = contaService.pesquisarPorNumero(transferencia.getContaDestino().getNumero());
+		contaCreditada.creditar(transferencia.getValor());
+		contaCreditada.getMovimentacoes().add(transferencia);
+		
+		transferencia.setTipo(TipoMovimentacao.TRANSFERENCIA);
+		transferencia.setConta(contaDebitada);
+		transferencia.setContaDestino(contaCreditada);
+		transferencia.setData(new Date());
 		
 		contaService.atualizar(contaDebitada);
 		contaService.atualizar(contaCreditada);
-		return movimentacaoRepository.save(t);
+		return movimentacaoRepository.save(transferencia);
 	}
 
 	@Override

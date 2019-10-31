@@ -16,7 +16,7 @@ import br.com.infoway.model.Agencia;
 public interface AgenciaRepository extends JpaRepository<Agencia, Long> {
 
 	/**
-	 * Pesquisa uma Agência por Nome
+	 * Pesquisa uma Agência pelo Nome
 	 * @param nome
 	 * @return agencia
 	 */
@@ -25,14 +25,14 @@ public interface AgenciaRepository extends JpaRepository<Agencia, Long> {
 	/**
 	 * Pesquisa uma Agência por CNPJ
 	 * @param cnpj
-	 * @return
+	 * @return agencia
 	 */
 	Agencia findByCnpj(String cnpj);
 	
 	/**
 	 * Pesquisa uma Agência por Código
 	 * @param codigo
-	 * @return
+	 * @return agencia
 	 */
 	Agencia findByCodigo(Integer codigo);
 }

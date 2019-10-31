@@ -12,13 +12,12 @@ import br.com.infoway.interfaces.ServiceInterface;
 import br.com.infoway.model.Agencia;
 import br.com.infoway.model.Banco;
 import br.com.infoway.repository.AgenciaRepository;
-import br.com.infoway.repository.BancoRepository;
 
 /**
  * 
  * @author Alexandre Lages
  *
- * Implementação do service de Agência
+ * Implementação do service responsavel pela regra de negócio de Agência
  */
 
 @Service
@@ -28,27 +27,27 @@ public class AgenciaService implements ServiceInterface<Agencia> {
 	private AgenciaRepository agenciaRepository;
 	
 	@Autowired
-	private BancoRepository bancoRepository;
+	private BancoService bancoService;
 
 	/**
-	 * Service responsável por inserir uma Agência na base de dados
+	 * Método service responsável por inserir uma Agência na base de dados
 	 * @param agencia
-	 * @return Agencia
+	 * @return agencia
 	 */
 	@Override
 	public Agencia inserir(Agencia agencia) {
 		if (validarInsercao(agencia)) {
-			Optional<Banco> banco = bancoRepository.findById(agencia.getBanco().getId());
-			banco.get().getAgencias().add(agencia);
-			agencia.setBanco(banco.get());
-			bancoRepository.save(banco.get());
+			Banco banco = bancoService.pesquisarPorId(agencia.getBanco().getId());
+			banco.getAgencias().add(agencia);
+			agencia.setBanco(banco);
+			bancoService.atualizar(banco);
 			return agenciaRepository.save(agencia);
 		}
 		return null;
 	}
 
 	/**
-	 * Service responsável por atualizar uma Agência na base de dados
+	 * Método service responsável por atualizar uma Agência na base de dados
 	 * @param agencia
 	 * @return Agencia
 	 */
@@ -59,7 +58,7 @@ public class AgenciaService implements ServiceInterface<Agencia> {
 	}
 
 	/**
-	 * Service responsável por deletar uma Agência da base de dados
+	 * Método service responsável por deletar uma Agência da base de dados
 	 * @param id da agência a ser deletada
 	 * @return void
 	 */
@@ -70,9 +69,9 @@ public class AgenciaService implements ServiceInterface<Agencia> {
 	}
 
 	/**
-	 * Service responsável por pesquisar uma Agência na base de dados
+	 * Método service responsável por pesquisar uma Agência na base de dados
 	 * @param id da agência pesquisada
-	 * @return Agencia
+	 * @return agencia
 	 */
 	@Override
 	public Agencia pesquisarPorId(Long id) {
@@ -82,7 +81,7 @@ public class AgenciaService implements ServiceInterface<Agencia> {
 	}
 
 	/**
-	 * Service responsável por listar todas as Agências da base de dados
+	 * Método service responsável por listar todas as Agências da base de dados
 	 * @param
 	 * @return List<Agencia>
 	 */
@@ -93,6 +92,7 @@ public class AgenciaService implements ServiceInterface<Agencia> {
 	
 	/**
 	 * Método responsável por validar a inserção de uma nova agência na base de daos
+	 * Valida por nome, código e cnpj
 	 * @param agencia
 	 * @return boolean 
 	 */
@@ -100,15 +100,12 @@ public class AgenciaService implements ServiceInterface<Agencia> {
 		if(agenciaRepository.findByNome(agencia.getNome()) != null) {
 			throw new ObjetoJaExisteException("Já existe uma Agência com o mesmo Nome cadastrado!");
 		}
-		
 		if(agenciaRepository.findByCodigo(agencia.getCodigo()) != null) {
 			throw new ObjetoJaExisteException("Já existe uma Agência com o mesmo Código cadastrado!");
 		}
-		
 		if(agenciaRepository.findByCnpj(agencia.getCnpj()) != null) {
 			throw new ObjetoJaExisteException("Já existe uma Agência com o mesmo CNPJ cadastrado!");
 		}
-		
 		return true;
 	}
 }

@@ -18,21 +18,21 @@ public interface BancoRepository extends JpaRepository<Banco, Long> {
 	/**
 	 * Pesquisar Banco por código
 	 * @param codigo
-	 * @return
+	 * @return banco
 	 */
 	Banco findByCodigo(Integer codigo);
 	
 	/**
 	 * Pesquisar Banco por nome
 	 * @param nome
-	 * @return
+	 * @return banco
 	 */
 	Banco findByNome(String nome);
 	
 	/**
 	 * Pesquisar Banco por CNPJ
 	 * @param cnpj
-	 * @return
+	 * @return banco
 	 */
 	Banco findByCnpj(String cnpj);
 }

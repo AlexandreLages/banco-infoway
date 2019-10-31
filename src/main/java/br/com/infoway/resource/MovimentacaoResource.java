@@ -16,7 +16,9 @@ import br.com.infoway.model.Movimentacao;
 import br.com.infoway.service.MovimentacaoService;
 
 @RestController
-@RequestMapping(value="/extratos")
+@RequestMapping(value="/extratos",
+	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 public class MovimentacaoResource implements ResourceInterface<Movimentacao> {
 
 	@Autowired
@@ -52,9 +54,7 @@ public class MovimentacaoResource implements ResourceInterface<Movimentacao> {
 	 * @param numero da conta
 	 * @return
 	 */
-	@RequestMapping(value="/{numero}", method=RequestMethod.GET,
-			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(value="/{numero}", method=RequestMethod.GET)
 	public ResponseEntity<List<MovimentacaoDTO>> listarTodos(@PathVariable Integer numero) {
 		List<MovimentacaoDTO> listaMovimentacaoDTO = movimentacaoService.listarTodos(numero);
 		return ResponseEntity.ok().body(listaMovimentacaoDTO);

@@ -18,7 +18,7 @@ import br.com.infoway.repository.TransferenciaRepository;
  * 
  * @author Alexandre Lages
  * 
- * Implementação do service de Movimentação
+ * Implementação do service responsavel pela regra de negocios de Movimentação
  */
 @Service
 public class MovimentacaoService implements ServiceInterface<Movimentacao>{
@@ -54,6 +54,11 @@ public class MovimentacaoService implements ServiceInterface<Movimentacao>{
 		return null;
 	}
 
+	/**
+	 * Metodo responsavel por listar todas as movimentacoes de uma conta bancaria
+	 * @param numero da conta
+	 * @return List<MovimentacaoDTO>
+	 */
 	public List<MovimentacaoDTO> listarTodos(Integer numero) {
 		Conta conta = contaService.pesquisarPorNumero(numero);
 		List<Movimentacao> listaMovimentacao = conta.getMovimentacoes();

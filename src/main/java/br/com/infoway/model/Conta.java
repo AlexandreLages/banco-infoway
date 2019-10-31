@@ -129,7 +129,7 @@ public class Conta implements Serializable {
 		this.movimentacoes = movimentacoes;
 	}
 
-	public BigDecimal saque(BigDecimal valor) {
+	public BigDecimal debitar(BigDecimal valor) {
 		if(valor.compareTo(saldo) == 1) {
 			throw new SaldoInsuficienteException("A Conta " + numero + 
 					" não possui saldo suficiente para realizar a transação!");
@@ -138,7 +138,7 @@ public class Conta implements Serializable {
 		return saldo;
 	}
 	
-	public BigDecimal deposito(BigDecimal valor) {
+	public BigDecimal creditar(BigDecimal valor) {
 		saldo = saldo.add(valor);
 		return saldo;
 	}

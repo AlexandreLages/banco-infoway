@@ -17,7 +17,7 @@ import br.com.infoway.repository.MovimentacaoRepository;
  * 
  * @author Alexandre Lages
  * 
- * Implementação do service de Movimentação
+ * Implementação do service responsavel pela regra de negocios de Movimentação do tipo Saque
  */
 @Service
 public class SaqueService implements ServiceInterface<Saque>{
@@ -29,23 +29,28 @@ public class SaqueService implements ServiceInterface<Saque>{
 	private ContaService contaService;
 
 	@Override
-	public Saque inserir(Saque t) {
-		Conta conta = contaService.pesquisarPorNumero(t.getConta().getNumero());
+	/**
+	 * Método responsável por inserir um saque na base de dados
+	 * @param saque
+	 * @return saque
+	 */
+	public Saque inserir(Saque saque) {
+		Conta conta = contaService.pesquisarPorNumero(saque.getConta().getNumero());
 		
-		if(conta.getSenha().equals(t.getConta().getSenha()) == false) {
+		if(conta.getSenha().equals(saque.getConta().getSenha()) == false) {
 			throw new SenhaIncorretaException("A senha para a conta " + conta.getNumero() + 
 					" está incorreta!");
 		}
 		
-		conta.saque(t.getValor());
-		conta.getMovimentacoes().add(t);
+		conta.debitar(saque.getValor());
+		conta.getMovimentacoes().add(saque);
 		
-		t.setTipo(TipoMovimentacao.SAQUE);
-		t.setConta(conta);
-		t.setData(new Date());
+		saque.setTipo(TipoMovimentacao.SAQUE);
+		saque.setConta(conta);
+		saque.setData(new Date());
 		
 		contaService.atualizar(conta);
-		return movimentacaoRepository.save(t);
+		return movimentacaoRepository.save(saque);
 	}
 
 	@Override

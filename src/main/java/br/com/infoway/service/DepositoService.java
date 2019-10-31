@@ -16,7 +16,7 @@ import br.com.infoway.repository.MovimentacaoRepository;
  * 
  * @author Alexandre Lages
  * 
- * Implementação do service de Movimentação do tipo Deposito
+ * Implementação do service responsavel pela regra de negocio de Movimentação do tipo Deposito
  */
 @Service
 public class DepositoService implements ServiceInterface<Deposito>{
@@ -28,17 +28,22 @@ public class DepositoService implements ServiceInterface<Deposito>{
 	private ContaService contaService;
 
 	@Override
-	public Deposito inserir(Deposito t) {
-		Conta conta = contaService.pesquisarPorNumero(t.getConta().getNumero());
-		conta.deposito(t.getValor());
-		conta.getMovimentacoes().add(t);
+	/**
+	 * Método responsável por inserir um deposito na base de dados
+	 * @param deposito
+	 * @return deposito
+	 */
+	public Deposito inserir(Deposito deposito) {
+		Conta conta = contaService.pesquisarPorNumero(deposito.getConta().getNumero());
+		conta.creditar(deposito.getValor());
+		conta.getMovimentacoes().add(deposito);
 		
-		t.setTipo(TipoMovimentacao.DEPOSITO);
-		t.setConta(conta);
-		t.setData(new Date());
+		deposito.setTipo(TipoMovimentacao.DEPOSITO);
+		deposito.setConta(conta);
+		deposito.setData(new Date());
 		
 		contaService.atualizar(conta);
-		return movimentacaoRepository.save(t);
+		return movimentacaoRepository.save(deposito);
 	}
 
 	@Override

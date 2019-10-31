@@ -23,7 +23,9 @@ import br.com.infoway.service.AgenciaService;
  */
 
 @RestController
-@RequestMapping(value="/agencias")
+@RequestMapping(value="/agencias", 
+	produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
+	consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 public class AgenciaResource implements ResourceInterface<Agencia> {
 	
 	@Autowired
@@ -34,9 +36,7 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 	 * @param agencia
 	 * @return
 	 */
-	@RequestMapping(method=RequestMethod.POST, 
-			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, 
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(method=RequestMethod.POST)
 	@Override	
 	public ResponseEntity<Void> inserir(Agencia agencia) {
 		agencia = agenciaService.inserir(agencia);
@@ -50,9 +50,7 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 	 * @param agencia
 	 * @return
 	 */
-	@RequestMapping(value="/{id}", method=RequestMethod.PUT,
-			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	@Override
 	public ResponseEntity<Void> atualizar(Agencia t, Long id) {
 		t.setId(id);
@@ -65,9 +63,7 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 	 * @param id da agência
 	 * @return
 	 */
-	@RequestMapping(value="/{id}", method=RequestMethod.DELETE,
-			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	@Override
 	public ResponseEntity<Void> deletar(Long id) {
 		agenciaService.deletar(id);
@@ -77,11 +73,9 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 	/**
 	 * Resource responsável por pesquisar uma agência
 	 * @param id da agência
-	 * @return
+	 * @return ResponseEntity<Agencia>
 	 */
-	@RequestMapping(value="/{id}", method=RequestMethod.GET,
-			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	@Override
 	public ResponseEntity<Agencia> pesquisarPorId(Long id) {
 		Agencia agencia = agenciaService.pesquisarPorId(id);
@@ -91,11 +85,9 @@ public class AgenciaResource implements ResourceInterface<Agencia> {
 	/**
 	 * Resource responsável por listar todas as agências
 	 * @param
-	 * @return
+	 * @return ResponseEntity<List<Agencia>>
 	 */
-	@RequestMapping(method=RequestMethod.GET,
-			produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-			consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+	@RequestMapping(method=RequestMethod.GET)
 	@Override
 	public ResponseEntity<List<Agencia>> listarTodos() {
 		List<Agencia> listaAgencia = agenciaService.listarTodos();
