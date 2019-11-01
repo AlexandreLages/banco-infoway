@@ -15,4 +15,4 @@
 <h1>Documentação da API</h1>
 
 <p>A documentação da API Banco Infoway encontra-se disponível no seguinte link:</p>
-<a href="https://web.postman.co/collections/4242158-8d6de52d-0de3-4836-a818-bd3bbd02e7b1?workspace=6552f997-d448-44cf-8bc8-265df44df2cc">Documentação</a>
+<a href="https://documenter.getpostman.com/view/4242158/SW131y36">Documentação</a>
