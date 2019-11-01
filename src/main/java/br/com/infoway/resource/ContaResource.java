@@ -49,7 +49,9 @@ public class ContaResource implements ResourceInterface<Conta> {
 
 	@Override
 	public ResponseEntity<Void> atualizar(Conta t, Long id) {
-		return null;
+		t.setId(id);
+		t = contaService.atualizar(t);
+		return ResponseEntity.noContent().build();
 	}
 
 	@Override
